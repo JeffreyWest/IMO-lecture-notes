@@ -25,7 +25,7 @@ plot(x,x.*0,':k','LineWidth',3);
 % add fixed points:
 plot(0,0,'.k','MarkerSize',60);
 ylim(yls);
-%notes();
+design_plot('tumor size, x','growth rate, dx/dt');
 
 %% logistic
 figure(2); hold on;
@@ -36,7 +36,8 @@ plot(x,x.*0,':k','LineWidth',3);
 plot(0,0,'.k','MarkerSize',60);
 plot(K,0,'.k','MarkerSize',60);
 ylim(yls);
-%notes();
+design_plot('tumor size, x','growth rate, dx/dt');
+
 
 
 %% logistic w/ allee effect
@@ -49,7 +50,8 @@ plot(0,0,'.k','MarkerSize',60);
 plot(A,0,'o','MarkerSize',18,'MarkerFaceColor',[1,1,0.9725],'MarkerEdgeColor','k','LineWidth',3);
 plot(K,0,'.k','MarkerSize',60);
 ylim(yls);
-notes();
+design_plot('tumor size, x','growth rate, dx/dt');
+
 
 
 tspan = [0 10];
@@ -73,9 +75,9 @@ for x0 = 0:0.1:1
 
 end
 
-figure(4);%notes();
-figure(5);%notes();
-figure(6);%notes();
+figure(4);design_plot('time, t','tumor size, x(t)');
+figure(5);design_plot('time, t','tumor size, x(t)');
+figure(6);design_plot('time, t','tumor size, x(t)');
 
 % 
 % exportgraphics(figure(1),'plots/SS_exponential.png','BackgroundColor',[1,1,0.9725],'Resolution',300)
@@ -103,6 +105,10 @@ function xdot = all_odes(t,x,r,K,A)
     xdot(3,1) = X*r*(1-X / K)*(X / A - 1);
     
 end
+
+
+
+
 
 
 

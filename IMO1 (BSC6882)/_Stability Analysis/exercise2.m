@@ -14,36 +14,30 @@ m12 = 1.2; m21 = 1.2;
 
 
 %% untreated, with mutual competition
-c = 0; r1 = 0.1; r2 = 0.1;
-K1 = 1; K2 = 1;
-d1 = 0.05; d2 = 0.05;
-m12 = 2; m21 = 3;
+% c = 0; r1 = 0.1; r2 = 0.1;
+% K1 = 1; K2 = 1;
+% d1 = 0.01; d2 = 0.01;
+% m12 = 2; m21 = 3;
 
 
-
-
-
+%% find & print out all fixed points:
 fixed_points = getFixedPoints(c,m12,m21,d1,d2,r1,r2,K1,K2);
+
 
 figure(1); hold on;
 Quiver(c,m12,m21,d1,d2,r1,r2,K1,K2)
 
 % iterate over all fixed points
 for fi = 1:1:size(fixed_points,1)
-    fixed_point = fixed_points(fi,:)
+    fixed_point = fixed_points(fi,:);
     Jstar = jacobian(fixed_point,c,m12,m21,d1,d2,r1,r2,K1,K2);
 
-    [lambda1,lambda2] = real_part_eigenvalues(Jstar);
-    
-    [lambda1,lambda2]
+    [lambda1,lambda2] = real_part_eigenvalues(Jstar)
     check_fixedpoint_type_and_plot(lambda1,lambda2,fixed_point);
-    
+
 end
 
-
-clean();
-
-
+design_plot('x_1 (Sensitive)','x_2 (Resistant)');
 
 
 
@@ -127,41 +121,42 @@ function [] = Quiver(c,m12,m21,d1,d2,r1,r2,K1,K2)
     %% set up meshgrid
     step = Kmax/20;
     step0 = step/2;
-    x_grid = step0:step:(Kmax-step0);
 
-    step = Kmax/20;
-    step0 = step/2;
+    x_grid = step0:step:(Kmax-step0);
     y_grid = step0:step:(Kmax-step0);
+
 
     [X1,X2] = meshgrid(x_grid,y_grid); % Generate domain.
     
     %% SENSITIVE    
     x1dot = r1.*X1.*( 1 - (X1 + m21.*X2) ./ K1 ).*(1 - c) - d1.*X1;
     x2dot = r2.*X2.*( 1 - (X2 + m12.*X1) ./ K2 ) - d2.*X2;
-
-    
     
     %% arrow length:
 
-    len = 0.0375;
+    %len = 0.0375;
     HL = 10;
     HW = 8;
+
+    len = 0.04;
 
     for i = 1:length(X1)
         for j = 1:length(X2)                
                 
             
             %% calculate direction & magnitude
-            V = x2dot(i,j);
-            U = x1dot(i,j); 
-            mag = sqrt(V^2 + U^2);
+            vector = [x1dot(i,j), x2dot(i,j)];
             
-            if (mag > 0)
-            %% set direction & magnitude
-                ah = annotation('arrow','headStyle','cback1','HeadLength',HL,'HeadWidth',HW);
+            if (norm(vector) > 0)
+                normalized_vector = bsxfun(@rdivide, vector, norm(vector));
 
+                U = len*normalized_vector(1);
+                V = len*normalized_vector(2);
+
+                %% set direction & magnitude
+                ah = annotation('arrow','headStyle','cback1','HeadLength',HL,'HeadWidth',HW);
                 set(ah,'parent',gca);
-                set(ah,'position',[X1(i,j), X2(i,j), len*U/mag, len*V/mag]);
+                set(ah,'position',[X1(i,j), X2(i,j), U, V]);
                 set(ah,'Color',color);
             end
         end
@@ -171,22 +166,3 @@ function [] = Quiver(c,m12,m21,d1,d2,r1,r2,K1,K2)
     xlim([0 Kmax]);
     ylim([0 Kmax]);
 end
-
-% make the plots pretty
-function clean()
-    h = gcf;
-    figure_number=h.Number;
-    figure(figure_number); hold on;
-    set(findobj(gcf,'type','axes'),'FontName','Arial','FontSize',24,'FontWeight','Bold', 'LineWidth', 2);
-    
-    p = get(gcf,'Position');
-    set(gcf,'Position',[p(1),p(2),600,600]);
-    box on; set(gcf,'color','w');
-    xlabel('x_1 (Sensitive)')
-    ylabel('x_2 (Resistant)')
-end
-
-
-
-
-
