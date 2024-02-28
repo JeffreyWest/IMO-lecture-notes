@@ -44,7 +44,7 @@ function [time,total_volume] = simulateAndPlotSingleDosingSchedule(t,v,d,color)
     kon = koff/koff_kon; 
 
     % initial condition:
-    v0 = [1,0]; % all unaffected cells
+    v0 = [1,0]; % U, A or C1, C2
 
     % tracking vectors etc:
     tspan = [0 1]; % 1 week intervals
