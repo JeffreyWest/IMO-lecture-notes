@@ -6,7 +6,7 @@ alpha = 1; beta = 0.05; delta = 0.02; gamma = 0.5;
 T0 = 10; E0 = 10;
 IC = [T0 E0];
 
-tspan = [0 20];
+tspan = 0:0.01:20;
 
 [t,y] = ode45(@(t,y) model_ODE(t,y,alpha,beta,delta,gamma),tspan,IC);
 
@@ -19,4 +19,4 @@ plot(t,y(:,2),'linewidth',2)
 xlabel('time');
 ylabel('T(t), I(t)')
 set(gca,'fontsize',20)
-legend('Predator','Prey')
+legend('Tumor','Immune')

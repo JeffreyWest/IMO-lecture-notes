@@ -3,11 +3,11 @@ clear all %clear all variables
 clc       %clear command window
 
 % model parameters:
-a = 0.2; K = 1000;
+a = 0.4; K = 1000;
 tspan = [0 20];
 
 % Use ODE45 to solve the ordinary differential equation:
-
+IC = 0.1;
 [t,y] = ode45(@(t,y) Gompertz_ODE(t,y,a,K), tspan, IC);
 
 % [t,y] = ode45(@Gompertz_ODE,tspan,IC,[],pars); %[] for additional options 

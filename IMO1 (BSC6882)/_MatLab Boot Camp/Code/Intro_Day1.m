@@ -72,11 +72,16 @@ load patientData.mat
 clear all
 load patientData.mat A
 
+%%
+clear
+x = 2
+
 %% --------------------------------------------------------------------------
 %.csv files
 data = csvread('Example1.csv',1); % starting from 1st row (skip 0th row)
 
-%%
+%% COMMENT (This will be skipped)
+% comments
 %-----------------------------------Plotting-------------------------------
 %2D Line Plot
 clear;close all;
