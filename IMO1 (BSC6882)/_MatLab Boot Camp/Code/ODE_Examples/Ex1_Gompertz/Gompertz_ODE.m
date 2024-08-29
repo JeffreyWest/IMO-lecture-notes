@@ -1,10 +1,10 @@
-function Tdot = Gompertz_ODE(t,T,a,K)
+function dTdt = Gompertz_ODE(t,y,a,K)
 %Gompertz growth model (https://en.wikipedia.org/wiki/Gompertz_function)
 
 %---------------------------------States-----------------------------------
-T = T(1);
+T = y(1);
 
 %----------------------------State Equations-------------------------------
-Tdot = a*log(K/T)*T;
+dTdt = a*log(K/T)*T;
 
 end
