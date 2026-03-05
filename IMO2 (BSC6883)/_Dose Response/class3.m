@@ -75,7 +75,7 @@ function [time,total_volume] = simulateSingleDosingSchedule(t,v,d,alphaOFF,alpha
     b2 = Hill_parameters(2);
     koff_kon = Hill_parameters(3);
     kon = 5/koff_kon; % set koff \approx 0.5
-    k0 = koff_kon *kon; %koff(t=0)
+    k0 = koff_kon *kon; % koff(t=0)
 
     % initial condition: [U0,A0,K0]
     v0 = [1,0,k0]; % all unaffected cells

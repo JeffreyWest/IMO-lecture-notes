@@ -40,7 +40,7 @@ function [time,total_volume] = simulateAndPlotSingleDosingSchedule(t,v,d,color)
     b1 = Hill_parameters(1);
     b2 = Hill_parameters(2);
     koff_kon = Hill_parameters(3);
-    koff = 5;   % set koff \approx 5
+    koff = 5;   % set koff \approx 5 at time 0
     kon = koff/koff_kon; 
 
     % initial condition:
